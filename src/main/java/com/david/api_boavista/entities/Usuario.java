@@ -33,4 +33,14 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public static Object builder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
+
+    public void setRole(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRole'");
+    }
 }
