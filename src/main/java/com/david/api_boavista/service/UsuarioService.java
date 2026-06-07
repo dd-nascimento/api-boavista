@@ -10,6 +10,8 @@ import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
 import com.david.api_boavista.repository.UsuarioRepository;
 
+import com.david.api_boavista.enums.Role;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,7 +27,7 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha()); // depois vamos criptografar
-        usuario.setRole("USER"); // ou enum se você tiver
+        usuario.setRole(Role.USER); // ou enum se você tiver
 
         Usuario salvo = usuarioRepository.save(usuario);
 
@@ -75,6 +77,7 @@ public class UsuarioService {
                 .id(usuario.getId())
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
+                .role(usuario.getRole())
                 .build();
     }
 }

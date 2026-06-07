@@ -1,6 +1,6 @@
 package com.david.api_boavista.dto;
 
-import com.david.api_boavista.entities.Role;
+import com.david.api_boavista.enums.Role;
 
 import lombok.Builder;
 import lombok.Getter;

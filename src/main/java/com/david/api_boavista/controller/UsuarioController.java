@@ -27,7 +27,7 @@ public class UsuarioController {
     }
 
     // 🔹 CRIAR USUÁRIO
-    @PostMapping
+    @PostMapping("/nwUser")
     public UsuarioResponseDTO cadastrarUsuario(@RequestBody UsuarioRequestDTO dto) {
         return usuarioService.salvar(dto);
     }

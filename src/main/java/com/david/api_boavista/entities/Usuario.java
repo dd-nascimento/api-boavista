@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.david.api_boavista.enums.Role;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,13 +36,4 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public static Object builder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'builder'");
-    }
-
-    public void setRole(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setRole'");
-    }
 }
