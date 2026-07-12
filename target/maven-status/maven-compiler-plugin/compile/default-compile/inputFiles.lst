@@ -1,0 +1,14 @@
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/ApiBoavistaApplication.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/config/SecurityConfig.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/controller/PedidoController.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/controller/UsuarioController.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/dto/PedidoDTO.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/dto/UsuarioRequestDTO.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/dto/UsuarioResponseDTO.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/entities/Pedido.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/entities/Usuario.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/enums/Role.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/PedidoRepository.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/UsuarioRepository.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/PedidoService.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/UsuarioService.java
