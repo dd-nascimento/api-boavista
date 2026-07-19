@@ -1,4 +1,5 @@
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/ApiBoavistaApplication.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/config/PasswordConfig.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/config/SecurityConfig.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/controller/PedidoController.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/controller/UsuarioController.java

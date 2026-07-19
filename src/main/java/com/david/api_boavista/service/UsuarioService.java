@@ -3,6 +3,7 @@ package com.david.api_boavista.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.david.api_boavista.dto.UsuarioRequestDTO;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 🔹 CREATE
     public UsuarioResponseDTO salvar(UsuarioRequestDTO dto) {
@@ -26,8 +28,8 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha()); // depois vamos criptografar
-        usuario.setRole(Role.USER); // ou enum se você tiver
+        usuario.setSenha(passwordEncoder.encode(dto.getSenha())); // Criptografar a senha
+        usuario.setRole(Role.USER);
 
         Usuario salvo = usuarioRepository.save(usuario);
 
@@ -59,7 +61,7 @@ public class UsuarioService {
 
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
+        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
 
         Usuario atualizado = usuarioRepository.save(usuario);
 
