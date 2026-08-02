@@ -11,6 +11,8 @@ import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
 import com.david.api_boavista.repository.UsuarioRepository;
 
+import com.david.api_boavista.exception.UsuarioNaoEncontradoException;
+
 import com.david.api_boavista.enums.Role;
 
 import lombok.RequiredArgsConstructor;
@@ -48,7 +50,8 @@ public class UsuarioService {
     public UsuarioResponseDTO buscarPorId(Long id) {
 
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException
+                    ("Usuário não encontrado"));
 
         return toResponseDTO(usuario);
     }
@@ -57,7 +60,8 @@ public class UsuarioService {
     public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
 
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException
+                    ("Usuário não encontrado"));
 
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
@@ -70,7 +74,12 @@ public class UsuarioService {
 
     // 🔹 DELETAR
     public void deletar(Long id) {
-        usuarioRepository.deleteById(id);
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() ->
+                new UsuarioNaoEncontradoException("Usuário não encontrado"));
+
+        usuarioRepository.delete(usuario);
     }
 
     // 🔁 CONVERSOR (ESSENCIAL)
