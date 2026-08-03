@@ -6,6 +6,7 @@ import com.david.api_boavista.dto.UsuarioRequestDTO;
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.service.UsuarioService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,8 +29,9 @@ public class UsuarioController {
 
     // 🔹 CRIAR USUÁRIO
     @PostMapping("/nwUser")
-    public UsuarioResponseDTO cadastrarUsuario(@RequestBody UsuarioRequestDTO dto) {
-        return usuarioService.salvar(dto);
+    public UsuarioResponseDTO cadastrarUsuario
+        (@RequestBody @Valid UsuarioRequestDTO dto) {
+            return usuarioService.salvar(dto);
     }
 
     // 🔹 DELETAR
