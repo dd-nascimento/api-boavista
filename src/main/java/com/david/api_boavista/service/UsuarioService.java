@@ -10,7 +10,7 @@ import com.david.api_boavista.dto.UsuarioRequestDTO;
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
 import com.david.api_boavista.repository.UsuarioRepository;
-
+import com.david.api_boavista.exception.EmailJaCadastradoException;
 import com.david.api_boavista.exception.UsuarioNaoEncontradoException;
 
 import com.david.api_boavista.enums.Role;
@@ -27,6 +27,10 @@ public class UsuarioService {
     // 🔹 CREATE
     public UsuarioResponseDTO salvar(UsuarioRequestDTO dto) {
 
+        if(usuarioRepository.existsByEmail(dto.getEmail())) {
+            throw new EmailJaCadastradoException("Email já cadastrado");
+        }
+        
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());

@@ -58,4 +58,19 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(error);
     }
+
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    public ResponseEntity<ErrorResponse> tratarEmailJaCadastrado
+        (EmailJaCadastradoException exception) {
+            ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                exception.getMessage(),
+                null
+            );
+
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(error);
+        }
 }
