@@ -16,5 +16,7 @@
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/PedidoRepository.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/UsuarioRepository.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/AuthorizationService.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/JwtService.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/PedidoService.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/UserDetailsServiceImpl.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/UsuarioService.java

@@ -6,6 +6,8 @@ com/david/api_boavista/dto/UsuarioRequestDTO.class
 com/david/api_boavista/dto/UsuarioResponseDTO.class
 com/david/api_boavista/exception/EmailJaCadastradoException.class
 com/david/api_boavista/dto/PedidoDTO.class
+com/david/api_boavista/service/JwtService.class
+com/david/api_boavista/service/UserDetailsServiceImpl.class
 com/david/api_boavista/exception/GlobalExceptionHandler.class
 com/david/api_boavista/enums/Role.class
 com/david/api_boavista/entities/Usuario.class
