@@ -9,7 +9,12 @@
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/entities/Pedido.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/entities/Usuario.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/enums/Role.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/exception/EmailJaCadastradoException.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/exception/ErrorResponse.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/exception/GlobalExceptionHandler.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/exception/UsuarioNaoEncontradoException.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/PedidoRepository.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/repository/UsuarioRepository.java
+/home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/AuthorizationService.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/PedidoService.java
 /home/zako/Canal_Desenv/Desenv_2026/api-boavista/src/main/java/com/david/api_boavista/service/UsuarioService.java
