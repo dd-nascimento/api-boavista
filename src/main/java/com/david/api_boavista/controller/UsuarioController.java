@@ -1,5 +1,6 @@
 package com.david.api_boavista.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.david.api_boavista.dto.UsuarioRequestDTO;
@@ -16,6 +17,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/listUser")
     public java.util.List<UsuarioResponseDTO> listarUsuarios() {
         return usuarioService.listarTodos();
