@@ -20,6 +20,4 @@ public class UsuarioRequestDTO {
     @NotBlank
     private String senha;
 
-    
-    private Role role;
 }

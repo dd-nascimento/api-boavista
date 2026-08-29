@@ -35,7 +35,6 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(passwordEncoder.encode(dto.getSenha())); // Criptografar a senha
-        usuario.setRole(dto.getRole());
 
         Usuario salvo = usuarioRepository.save(usuario);
 
