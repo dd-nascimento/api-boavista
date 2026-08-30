@@ -3,6 +3,7 @@ package com.david.api_boavista.controller;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.david.api_boavista.dto.RoleUpdateDTO;
 import com.david.api_boavista.dto.UsuarioRequestDTO;
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.service.UsuarioService;
@@ -40,5 +41,12 @@ public class UsuarioController {
     @DeleteMapping("/dell/{id}")
     public void deletarUsuario(@PathVariable Long id) {
         usuarioService.deletar(id);
+    }
+
+    // 🔹 ATUALIZAR ROLE
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/role")
+    public UsuarioResponseDTO alterarRole(@PathVariable Long id, @RequestBody @Valid RoleUpdateDTO dto) {
+        return usuarioService.alterarRole(id, dto);
     }
 }

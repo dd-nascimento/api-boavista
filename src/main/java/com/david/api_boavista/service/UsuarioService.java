@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.david.api_boavista.dto.RoleUpdateDTO;
 import com.david.api_boavista.dto.UsuarioRequestDTO;
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
@@ -69,6 +70,17 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+
+        Usuario atualizado = usuarioRepository.save(usuario);
+
+        return toResponseDTO(atualizado);
+    }
+
+    public UsuarioResponseDTO alterarRole(Long id, RoleUpdateDTO dto) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado"));
+
+        usuario.setRole(dto.getRole());
 
         Usuario atualizado = usuarioRepository.save(usuario);
 
