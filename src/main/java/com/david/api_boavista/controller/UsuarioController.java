@@ -25,12 +25,14 @@ public class UsuarioController {
     }
 
     // 🔹 BUSCAR POR ID
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     @GetMapping("/{id}")
     public UsuarioResponseDTO buscarUsuario(@PathVariable Long id) {
         return usuarioService.buscarPorId(id);
     }
 
     // 🔹 CRIAR USUÁRIO
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/nwUser")
     public UsuarioResponseDTO cadastrarUsuario
         (@RequestBody @Valid UsuarioRequestDTO dto) {
@@ -38,6 +40,7 @@ public class UsuarioController {
     }
 
     // 🔹 DELETAR
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/dell/{id}")
     public void deletarUsuario(@PathVariable Long id) {
         usuarioService.deletar(id);
@@ -48,5 +51,12 @@ public class UsuarioController {
     @PutMapping("/{id}/role")
     public UsuarioResponseDTO alterarRole(@PathVariable Long id, @RequestBody @Valid RoleUpdateDTO dto) {
         return usuarioService.alterarRole(id, dto);
+    }
+
+    // 🔹 ATUALIZAR CADASTRO
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    @PutMapping("/{id}")
+    public UsuarioResponseDTO atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioRequestDTO dto) {
+        return usuarioService.atualizar(id, dto);
     }
 }
