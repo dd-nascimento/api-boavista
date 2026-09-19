@@ -1,6 +1,7 @@
 package com.david.api_boavista.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
+import com.david.api_boavista.exception.UsuarioNaoEncontradoException;
 import com.david.api_boavista.repository.UsuarioRepository;
 
 import jakarta.inject.Inject;
@@ -48,5 +50,16 @@ public class UsuarioServiceTest {
         assertEquals(01L, resultado.getId());
         assertEquals("João Henrique Moura", resultado.getNome());
         assertEquals("jhmoura@apiboavista.com", resultado.getEmail());
+    }
+
+    @Test
+    void buscarPorId_deveLancarExcecaoQuandoUsuarioNaoExiste() {
+
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.empty());
+
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.buscarPorId(1L);
+        });
     }
 }
