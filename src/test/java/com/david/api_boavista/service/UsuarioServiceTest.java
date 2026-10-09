@@ -222,4 +222,19 @@ public class UsuarioServiceTest {
         assertEquals("senhaCriptografada", usuarioCapturado.getSenha());
         verify(passwordEncoder).encode(usuarioRequestDTO.getSenha());
     }
+
+    @Test 
+    void atualizar_deveLancarExcecaoQuandoUsuarioNaoExiste(){
+
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.empty());
+        
+        UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
+        
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.atualizar(1L, usuarioRequestDTO);
+        });
+
+        verify(usuarioRepository, never()).save(any(Usuario.class));
+    }
 }
