@@ -285,5 +285,8 @@ public class UsuarioServiceTest {
         assertThrows(UsuarioNaoEncontradoException.class, () -> {
             usuarioService.alterarRole(1L, roleUpdateDTO);
         });
+
+        verify(usuarioRepository, never()).save(any(Usuario.class));
+        
     }
 }
