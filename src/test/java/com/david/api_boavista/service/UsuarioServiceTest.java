@@ -272,4 +272,18 @@ public class UsuarioServiceTest {
         Usuario usuarioCapturado = usuarioCaptor.getValue();
         assertEquals(Role.ADMIN, usuarioCapturado.getRole());
     }
+
+    @Test
+    void alterarRole_deveLancarExcecaoQuandoUsuarioNaoExiste() {
+        
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.empty());
+
+        RoleUpdateDTO roleUpdateDTO = new RoleUpdateDTO();
+            roleUpdateDTO.setRole(Role.ADMIN);
+        
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.alterarRole(1L, roleUpdateDTO);
+        });
+    }
 }
