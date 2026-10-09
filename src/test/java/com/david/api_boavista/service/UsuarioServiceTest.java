@@ -21,9 +21,11 @@ import static org.mockito.Mockito.verify;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.david.api_boavista.dto.RoleUpdateDTO;
 import com.david.api_boavista.dto.UsuarioRequestDTO;
 import com.david.api_boavista.dto.UsuarioResponseDTO;
 import com.david.api_boavista.entities.Usuario;
+import com.david.api_boavista.enums.Role;
 import com.david.api_boavista.exception.EmailJaCadastradoException;
 import com.david.api_boavista.exception.UsuarioNaoEncontradoException;
 import com.david.api_boavista.repository.UsuarioRepository;
@@ -236,5 +238,38 @@ public class UsuarioServiceTest {
         });
 
         verify(usuarioRepository, never()).save(any(Usuario.class));
+    }
+
+    @Test 
+    void alterarRole_deveRetornarUsuarioAtualizado() {
+        
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        usuario.setNome("João Henrique de Moura");
+        usuario.setRole(Role.USER);
+        
+        RoleUpdateDTO roleUpdateDTO = new RoleUpdateDTO();
+        roleUpdateDTO.setRole(Role.ADMIN);
+        
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.of(usuario));
+
+        when(usuarioRepository.save(any(Usuario.class)))
+            .thenAnswer(invocation -> invocation.getArgument(0));
+
+        UsuarioResponseDTO resultado =
+            usuarioService.alterarRole(1L, roleUpdateDTO);
+
+        assertEquals(1L, resultado.getId());
+        assertEquals("João Henrique de Moura", resultado.getNome());
+        assertEquals(Role.ADMIN, resultado.getRole());
+
+        ArgumentCaptor<Usuario> usuarioCaptor =
+            ArgumentCaptor.forClass(Usuario.class);
+        
+        verify(usuarioRepository).save(usuarioCaptor.capture());
+
+        Usuario usuarioCapturado = usuarioCaptor.getValue();
+        assertEquals(Role.ADMIN, usuarioCapturado.getRole());
     }
 }
