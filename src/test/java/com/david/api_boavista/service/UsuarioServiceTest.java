@@ -132,6 +132,8 @@ public class UsuarioServiceTest {
         );
 
         verify(usuarioRepository, never()).save(any(Usuario.class));
+
+        verify(passwordEncoder, never()).encode(any(String.class));
     }
 
     @Test
@@ -238,6 +240,8 @@ public class UsuarioServiceTest {
         });
 
         verify(usuarioRepository, never()).save(any(Usuario.class));
+
+        verify(passwordEncoder, never()).encode(any(String.class));
     }
 
     @Test 
@@ -288,5 +292,32 @@ public class UsuarioServiceTest {
 
         verify(usuarioRepository, never()).save(any(Usuario.class));
         
+    }
+
+    @Test
+    void deletar_deveExcluirUsuarioQuandoEleExiste() {
+
+        Usuario usuario = new Usuario();
+
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.of(usuario));
+
+        usuarioService.deletar(1L);
+
+        verify(usuarioRepository).delete(usuario);
+    }
+
+    @Test
+    void deletar_deveLancarExcecaoQuandoUsuarioNaoExiste(){
+
+        when(usuarioRepository.findById(1L))
+            .thenReturn(Optional.empty());
+
+        assertThrows(UsuarioNaoEncontradoException.class, () ->{
+            usuarioService.deletar(1L);
+        });
+
+        //Verifica se existe o usuário, caso não exista, o deletar não deve ser chamado
+        verify(usuarioRepository, never()).delete(any(Usuario.class));
     }
 }
