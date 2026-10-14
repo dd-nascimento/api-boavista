@@ -4,7 +4,8 @@ public enum Role {
     
     //Centralizar as informações de cada perfil, facilitanto futuras expansões sem precisar alterar o código em diversos lugares.
     ADMIN("ROLE_ADMIN"),
-    USER("ROLE_USER");
+    USER("ROLE_USER"),
+    SOLUCIONADOR("SOLUCIONADOR");
 
     private final String authority;
 

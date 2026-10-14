@@ -37,8 +37,11 @@ public class Pedido {
     @Column (name = "categoria_pedido", nullable = false)
     private CategoriaPedido categoriaPedido;
 
+    @Column(name = "data_criacao", nullable = false, updatable = false)
+    private LocalDateTime dataCriacao;
+
     @Column(name = "dataHora_inicio", nullable = false)
-    private LocalDateTime dataHoraInicio= LocalDateTime.now();
+    private LocalDateTime dataHoraInicio;
 
     @Column(name = "dataHora_fim", nullable = false)
     private LocalDateTime dataHoraFim;
