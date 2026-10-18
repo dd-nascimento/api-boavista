@@ -1,6 +1,5 @@
 package com.david.api_boavista.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.david.api_boavista.enums.CategoriaPedido;

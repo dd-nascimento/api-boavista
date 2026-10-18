@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.david.api_boavista.dto.PedidoDTO;
+import com.david.api_boavista.dto.PedidoResponseDTO;
 import com.david.api_boavista.entities.Usuario;
 import com.david.api_boavista.enums.StatusPedido;
 import com.david.api_boavista.enums.CategoriaPedido;
@@ -60,45 +61,82 @@ public class PedidoService {
                     new RuntimeException("Usuário autenticado não encontrado"));
     }
 
+    private PedidoResponseDTO converterParaDTO(Pedido pedido) {
+    PedidoResponseDTO dto = new PedidoResponseDTO();
+
+    dto.setId(pedido.getId());
+    dto.setNumeroPedido(pedido.getNumeroPedido());
+    dto.setCategoriaPedido(pedido.getCategoriaPedido());
+    dto.setDataCriacao(pedido.getDataCriacao());
+    dto.setDataHoraInicio(pedido.getDataHoraInicio());
+    dto.setDataHoraFim(pedido.getDataHoraFim());
+    dto.setLocalExecucao(pedido.getLocalExecucao());
+    dto.setTitulo(pedido.getTitulo());
+    dto.setDescricao(pedido.getDescricao());
+    dto.setStatusPedido(pedido.getStatusPedido());
+
+    dto.setSolicitanteNome(
+            pedido.getUsuarioSolicitante().getNome());
+    dto.setSolicitanteEmail(
+            pedido.getUsuarioSolicitante().getEmail());
+
+    if (pedido.getUsuarioSolucionador() != null) {
+        dto.setSolucionadorNome(
+                pedido.getUsuarioSolucionador().getNome());
+        dto.setSolucionadorEmail(
+                pedido.getUsuarioSolucionador().getEmail());
+    }
+
+    return dto;
+    }
+
     @Transactional
-    public Pedido criar(PedidoDTO dto) {
-    Usuario solicitante = buscarUsuarioAutenticado();
+    public PedidoResponseDTO criar(PedidoDTO dto) {
+        Usuario solicitante = buscarUsuarioAutenticado();
+        LocalDateTime agora = LocalDateTime.now();
 
-    LocalDateTime agora = LocalDateTime.now();
+        if (dto.getDataHoraInicio().isBefore(agora)) {
+            throw new RuntimeException(
+                    "A data de início não pode ser anterior à data de criação");
+        }
 
-    if (dto.getDataHoraInicio().isBefore(agora)) {
-        throw new RuntimeException(
-                "A data de início não pode ser anterior à data de criação");
+        if (!dto.getDataHoraFim().isAfter(dto.getDataHoraInicio())) {
+            throw new RuntimeException(
+                    "A data de término deve ser posterior à data de início");
+        }
+
+        Pedido pedido = new Pedido();
+
+        pedido.setNumeroPedido(
+            gerarNumeroPedido(dto.getCategoriaPedido(), agora));
+        pedido.setCategoriaPedido(dto.getCategoriaPedido());
+        pedido.setDataCriacao(agora);
+        pedido.setDataHoraInicio(dto.getDataHoraInicio());
+        pedido.setDataHoraFim(dto.getDataHoraFim());
+        pedido.setLocalExecucao(dto.getLocalExecucao());
+        pedido.setTitulo(dto.getTitulo());
+        pedido.setDescricao(dto.getDescricao());
+        pedido.setUsuarioSolicitante(solicitante);
+        pedido.setStatusPedido(StatusPedido.ABERTO);
+
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        return converterParaDTO(pedidoSalvo);
     }
 
-    if (!dto.getDataHoraFim().isAfter(dto.getDataHoraInicio())) {
-        throw new RuntimeException(
-                "A data de término deve ser posterior à data de início");
+    public List<PedidoResponseDTO> listarTodos() {
+    return pedidoRepository.findAll()
+            .stream()
+            .map(this::converterParaDTO)
+            .toList();
     }
 
-    Pedido pedido = new Pedido();
+    public PedidoResponseDTO buscarPorId(Long id) {
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Pedido não encontrado"));
 
-    pedido.setNumeroPedido(gerarNumeroPedido(dto.getCategoriaPedido(), agora));
-    pedido.setCategoriaPedido(dto.getCategoriaPedido());
-    pedido.setDataCriacao(agora);
-    pedido.setDataHoraInicio(dto.getDataHoraInicio());
-    pedido.setDataHoraFim(dto.getDataHoraFim());
-    pedido.setLocalExecucao(dto.getLocalExecucao());
-    pedido.setTitulo(dto.getTitulo());
-    pedido.setDescricao(dto.getDescricao());
-    pedido.setUsuarioSolicitante(solicitante);
-    pedido.setStatusPedido(StatusPedido.ABERTO);
-
-    return pedidoRepository.save(pedido);
-    }
-
-    public List<Pedido> listarTodos() {
-        return pedidoRepository.findAll();
-    }
-
-    public Pedido buscarPorId(Long id) {
-        return pedidoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        return converterParaDTO(pedido);
     }
 
 }
