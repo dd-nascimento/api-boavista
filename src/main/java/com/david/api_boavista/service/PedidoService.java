@@ -15,8 +15,6 @@ import com.david.api_boavista.entities.Usuario;
 import com.david.api_boavista.enums.StatusPedido;
 import com.david.api_boavista.enums.CategoriaPedido;
 import com.david.api_boavista.repository.UsuarioRepository;
-import com.david.api_boavista.service.SequenciaPedidoService;
-
 import org.springframework.stereotype.Service;
 
 import com.david.api_boavista.entities.Pedido;
