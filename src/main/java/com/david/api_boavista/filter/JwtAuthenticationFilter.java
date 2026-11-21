@@ -11,55 +11,69 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.david.api_boavista.service.JwtService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+        private final JwtService jwtService;
+        private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(
-        JwtService jwtService,
-        UserDetailsService userDetailsService) {
+        public JwtAuthenticationFilter(
+                        JwtService jwtService,
+                        UserDetailsService userDetailsService) {
 
-        this.userDetailsService = userDetailsService;
-        this.jwtService = jwtService;
-    }
-    
-    @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
-            throws ServletException, IOException {
+                this.userDetailsService = userDetailsService;
+                this.jwtService = jwtService;
+        }
 
-            String authorizationHeader = request.getHeader("Authorization");
+        @Override
+        protected void doFilterInternal(
+                        HttpServletRequest request,
+                        HttpServletResponse response,
+                        FilterChain filterChain)
+                        throws ServletException, IOException {
 
-            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                String token = null;
 
-                String token = authorizationHeader.substring(7);
+                Cookie[] cookies = request.getCookies();
 
-                String username =
-                        jwtService.extrairUsername(token);
+                if (cookies != null) {
+                        for (Cookie cookie : cookies) {
+                                if ("JWT".equals(cookie.getName())) {
+                                        token = cookie.getValue();
+                                        break;
+                                }
+                        }
+                }
 
-                UserDetails usuario =
-                        userDetailsService.loadUserByUsername(username);
+                if (token == null) {
+                        String authorizationHeader = request.getHeader("Authorization");
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                usuario,
-                                null,
-                                usuario.getAuthorities()
-                        );
+                        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                                token = authorizationHeader.substring(7);
+                        }
+                }
 
-                SecurityContextHolder.getContext()
-                        .setAuthentication(authentication);
-            }
+                if (token != null) {
 
-        filterChain.doFilter(request, response);
-    }
+                        String username = jwtService.extrairUsername(token);
+
+                        UserDetails usuario = userDetailsService.loadUserByUsername(username);
+
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                        usuario,
+                                        null,
+                                        usuario.getAuthorities());
+
+                        SecurityContextHolder.getContext()
+                                        .setAuthentication(authentication);
+                }
+
+                filterChain.doFilter(request, response);
+        }
 }

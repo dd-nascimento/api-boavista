@@ -52,4 +52,10 @@ public class JwtService {
             .getPayload()
             .getSubject();
     }
+
+    public long getExpirationTime() {
+
+        return expirationTime;
+        
+    }
 }
